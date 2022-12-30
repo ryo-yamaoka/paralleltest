@@ -1,0 +1,31 @@
+name: Go
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ 'macos-latest', 'ubuntu-latest' ]
+        go: [ '1.18', '1.19' ]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
+          cache: true
+      - name: Setup linter
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: 'latest'
+      - name: Lint
+        run: make lint
+      - name: Build
+        run: make
+      - name: Test
+        run: make test
