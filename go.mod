@@ -1,4 +1,4 @@
-module github.com/kunwardeep/paralleltest
+module github.com/ryo-yamaoka/paralleltest
 
 go 1.19
 
